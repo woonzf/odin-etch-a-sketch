@@ -1,0 +1,27 @@
+header {
+    display: flex;
+    justify-content: center;
+}
+
+.content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+}
+
+button {
+    height: 50px;
+    width: 100px;
+}
+
+.grid {
+    border: 2px solid black;
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.gridBox {
+    height: 30px;
+    width: 30px;
+}
