@@ -5,9 +5,28 @@ header {
 
 .content {
     display: flex;
+    justify-content: center;
+    margin-bottom: 20px;
+}
+
+.pen {
+    display: flex;
     flex-direction: column;
-    align-items: center;
-    gap: 20px;
+    justify-content: center;
+    gap: 10px;
+}
+
+.grid {
+    border: 2px solid black;
+    display: flex;
+    flex-wrap: wrap;
+    margin: 0 120px 0 20px;
+}
+
+.option {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
 }
 
 button {
@@ -15,13 +34,6 @@ button {
     width: 100px;
 }
 
-.grid {
-    border: 2px solid black;
-    display: flex;
-    flex-wrap: wrap;
-}
-
-.gridBox {
-    height: 30px;
-    width: 30px;
+.bold {
+    font-weight: bold;
 }
