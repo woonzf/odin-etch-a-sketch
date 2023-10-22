@@ -1,3 +1,6 @@
+// Global variable
+let mouseDown = false;
+
 // Run after DOM is loaded
 document.addEventListener("DOMContentLoaded", () => {
     // Set grid dimensions
@@ -13,6 +16,16 @@ document.addEventListener("DOMContentLoaded", () => {
     const colorBoxesDef = "#ffffff"; // white
     let boxes = createGridBoxes(
         heightGrid, widthGrid, userInput, grid, colorBoxesDef);
+    
+    // Update mouseDown accordingly
+    grid.addEventListener("mousedown", (e) => {
+        e.preventDefault();
+        mouseDown = true;
+    });
+
+    grid.addEventListener("mouseup", () => {
+        mouseDown = false;
+    });
 
     // Initialize color button list
     const pen = document.querySelector(".pen");
@@ -24,6 +37,7 @@ document.addEventListener("DOMContentLoaded", () => {
         boxes.forEach(box => {
             removeGridListeners(box);
             box.addEventListener("mouseover", colorRandom);
+            box.addEventListener("mousedown", colorRandom);
         });
 
         highlight(btnRandom, btnList);
@@ -35,6 +49,7 @@ document.addEventListener("DOMContentLoaded", () => {
         boxes.forEach(box => {
             removeGridListeners(box);
             box.addEventListener("mouseover", colorShade);
+            box.addEventListener("mousedown", colorShade);
         });
 
         highlight(btnShade, btnList);
@@ -46,6 +61,7 @@ document.addEventListener("DOMContentLoaded", () => {
         boxes.forEach(box => {
             removeGridListeners(box);
             box.addEventListener("mouseover", colorDefault);
+            box.addEventListener("mousedown", colorDefault);
         });
 
         highlight(btnDef, btnList);
@@ -102,6 +118,7 @@ function createGridBoxes(
         box.style.width = `${widthBox}px`;
         box.style.backgroundColor = colorBoxesDef;
         box.addEventListener("mouseover", colorDefault);
+        box.addEventListener("mousedown", colorDefault);
     });
 
     return boxes;
@@ -109,17 +126,21 @@ function createGridBoxes(
 
 // Function for default color
 function colorDefault(e) {
+    if (!mouseDown && e.type === "mouseover") return;
     e.target.style.backgroundColor = "#d3d3d3"; // lightgrey
 };
 
 // Function for random color
 function colorRandom(e) {
+    if (!mouseDown && e.type === "mouseover") return;
     let color = Math.floor(Math.random()*16777215).toString(16);
     e.target.style.backgroundColor = "#" + color;
 };
 
 // Function for shading
 function colorShade(e) {
+    if (!mouseDown && e.type === "mouseover") return;
+
     let target = e.target;
     let rgbString = target.style.backgroundColor;
     let rgbArray = rgbString.slice(4, -1).split(", ");
@@ -139,8 +160,11 @@ function colorShade(e) {
 // Function to remove grid boxes' event listeners
 function removeGridListeners(e) {
     e.removeEventListener("mouseover", colorRandom);
+    e.removeEventListener("mousedown", colorRandom);
     e.removeEventListener("mouseover", colorShade);
+    e.removeEventListener("mousedown", colorShade);
     e.removeEventListener("mouseover", colorDefault);
+    e.removeEventListener("mousedown", colorDefault);
 };
 
 // Function to highlight current mode
